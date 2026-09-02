@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Register - City Hospital</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>City Hospital</h1>
+    <p>Patient Registration</p>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="doctors.html">Doctors</a>
+      <a href="booking.html">Book Appointment</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Patient Register</a>
+    </nav>
+  </header>
+
+  <main class="auth-page">
+    <section class="auth-card">
+      <h2>Create Patient Account</h2>
+
+      <form id="registerForm">
+        <input type="text" id="patientName" placeholder="Patient Name" required>
+        <input type="number" id="patientAge" placeholder="Age" required>
+
+        <select id="patientGender" required>
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <input type="text" id="patientPhone" placeholder="Phone Number" required>
+        <input type="text" id="patientAddress" placeholder="Address" required>
+        <select id="patientBloodGroup">
+          <option value="">Blood Group (Optional)</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+        <input type="text" id="patientAllergies" placeholder="Allergies (Optional)">
+        <textarea id="patientMedicalHistory" placeholder="Medical History (Optional)"></textarea>
+        <input type="text" id="patientEmergencyContact" placeholder="Emergency Contact Name (Optional)">
+        <input type="text" id="patientEmergencyPhone" placeholder="Emergency Contact Number (Optional)">
+        <input type="text" id="patientUsername" placeholder="Create Username" required>
+        <input type="password" id="patientPassword" placeholder="Create Password" required>
+
+        <button type="submit">Register</button>
+      </form>
+
+      <p id="registerMessage"></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

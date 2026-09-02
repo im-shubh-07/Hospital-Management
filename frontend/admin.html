@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - City Hospital</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <h2>City Hospital</h2>
+      <p>Admin Panel</p>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="#addDoctorSection">Add Doctor</a>
+        <a href="#patientsSection">Patients</a>
+        <a href="#appointmentsSection">Appointments</a>
+        <button class="logoutBtn">Logout</button>
+      </nav>
+    </aside>
+
+    <main class="dashboard-main">
+      <section id="addDoctorSection">
+        <h2>Add Doctor</h2>
+
+        <form id="addDoctorForm">
+          <input type="text" id="doctorName" placeholder="Doctor Name" required>
+          <input type="text" id="doctorSpecialization" placeholder="Specialization" required>
+          <input type="text" id="doctorPhone" placeholder="Phone Number" required>
+
+          <select id="departmentSelect" required>
+            <option value="">Select Department</option>
+          </select>
+
+          <input type="text" id="doctorUsername" placeholder="Doctor Username" required>
+          <input type="password" id="doctorPassword" placeholder="Doctor Password" required>
+
+          <button type="submit">Add Doctor</button>
+        </form>
+
+        <p id="doctorMessage"></p>
+      </section>
+
+      <section id="patientsSection">
+        <h2>Patients</h2>
+        <div id="patientsList"></div>
+      </section>
+
+      <section id="appointmentsSection">
+        <h2>Appointments</h2>
+        <div id="appointmentsList"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

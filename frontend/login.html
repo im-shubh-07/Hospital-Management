@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - City Hospital</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>City Hospital</h1>
+    <p>Login Portal</p>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="doctors.html">Doctors</a>
+      <a href="booking.html">Book Appointment</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <main class="auth-page">
+    <section class="auth-card login-card">
+      <h2>Login</h2>
+
+      <form id="loginForm">
+        <div id="roleBox">
+          <select id="loginRole" required>
+          <option value="">Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="doctor">Doctor</option>
+          <option value="patient">Patient</option>
+          </select>
+        </div>
+
+        <input type="text" id="loginUsername" placeholder="Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+
+      <p id="loginMessage"></p>
+      <p id="registerPrompt">New patient? <a href="register.html">Create patient account</a></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

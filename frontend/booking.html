@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Appointment - City Hospital</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <h2>City Hospital</h2>
+      <p>Patient Area</p>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="patient-dashboard.html#patientProfileSection">My Profile</a>
+        <a href="booking.html">Book Appointment</a>
+        <a href="patient-appointments.html">My Appointments</a>
+        <button class="logoutBtn">Logout</button>
+      </nav>
+    </aside>
+
+    <main class="dashboard-main">
+      <section>
+        <h2>Patient Booking Form</h2>
+        <p id="loggedPatientInfo"></p>
+
+        <form id="bookingForm">
+          <select id="doctorSelect" required>
+            <option value="">Select Doctor</option>
+          </select>
+
+          <input type="date" id="appointmentDate" required>
+          <input type="time" id="appointmentTime" required>
+
+          <button type="submit">Book Appointment</button>
+        </form>
+
+        <p id="bookingMessage"></p>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

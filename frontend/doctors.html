@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctors - City Hospital</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>City Hospital</h1>
+    <p>Our Doctors</p>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="doctors.html">Doctors</a>
+      <button type="button" data-open-booking-modal>Book Appointment</button>
+      <a href="login.html">Login</a>
+      <a href="register.html">Patient Register</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Doctors List</h2>
+      <div id="doctorsList"></div>
+    </section>
+  </main>
+
+  <div class="modal" id="bookingModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="booking-modal-card">
+      <button class="modal-close" type="button" aria-label="Close booking window" data-close-modal>&times;</button>
+      <h2 id="modalTitle">Book an Appointment</h2>
+      <p id="modalPatientInfo"></p>
+      <div id="modalLoginPrompt" class="modal-login-prompt" hidden>
+        <p>Please login as a patient to book your appointment.</p>
+        <a class="profile-link appointment-link" href="login.html?role=patient&next=doctors.html">Patient Login</a>
+        <a class="profile-link" href="register.html">Create Patient Account</a>
+      </div>
+      <form id="homeBookingForm" hidden>
+        <select id="modalDoctorSelect" required>
+          <option value="">Select Doctor</option>
+        </select>
+        <input type="date" id="modalAppointmentDate" required>
+        <input type="time" id="modalAppointmentTime" required>
+        <button type="submit">Confirm Appointment</button>
+      </form>
+      <p id="modalBookingMessage"></p>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
