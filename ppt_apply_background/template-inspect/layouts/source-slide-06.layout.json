@@ -1,0 +1,2312 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/x8f69ofe",
+    "id": "x8f69ofe",
+    "slide": 6,
+    "layoutId": "/ppt/slideLayouts/slideLayout7.xml",
+    "layoutName": "Blank",
+    "layoutType": "blank",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "Office",
+    "colors": {
+      "accent1": "#4F81BD",
+      "accent2": "#C0504D",
+      "accent3": "#9BBB59",
+      "accent4": "#8064A2",
+      "accent5": "#4BACC6",
+      "accent6": "#F79646",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#1F497D",
+      "lt2": "#EEECE1",
+      "hlink": "#0000FF",
+      "folHlink": "#800080"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Plus Jakarta Sans",
+      "Plus Jakarta Sans ExtraBold"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout7.xml",
+      "name": "Blank",
+      "type": "blank",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/2",
+          "id": "2",
+          "name": "Date Placeholder 1",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "9/3/2026",
+          "textPreview": "9/3/2026",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "9/3/2026",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "9/3/2026"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/3",
+          "id": "3",
+          "name": "Footer Placeholder 2",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/4",
+          "id": "4",
+          "name": "Slide Number Placeholder 3",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Title Placeholder 1",
+          "bbox": [
+            48,
+            28.83,
+            864,
+            120
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master title style",
+          "textPreview": "Click to edit Master title style",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master title style",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master title style"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Text Placeholder 2",
+          "bbox": [
+            48,
+            168,
+            864,
+            475.17
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master text styles\nSecond level\nThird level\nFourth level\nFifth level",
+          "textPreview": "Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level",
+          "resolvedTextStyle": {
+            "vertical": 1,
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master text styles",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master text styles"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Second level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Second level"
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Third level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Third level"
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Fourth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fourth level"
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Fifth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fifth level"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/4",
+          "id": "4",
+          "name": "Date Placeholder 3",
+          "bbox": [
+            48,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "9/3/2026",
+          "textPreview": "9/3/2026",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "9/3/2026",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "9/3/2026"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/5",
+          "id": "5",
+          "name": "Footer Placeholder 4",
+          "bbox": [
+            328,
+            667.33,
+            304,
+            38.33
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/6",
+          "id": "6",
+          "name": "Slide Number Placeholder 5",
+          "bbox": [
+            688,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/adgju1s7",
+      "id": "164",
+      "name": "Picture 1",
+      "bbox": [
+        0,
+        -6.82,
+        1280,
+        720
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image34.png",
+        "contentType": "image/png",
+        "byteLength": 9340
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image34.png",
+        "contentType": "image/png",
+        "byteLength": 9340
+      }
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4ji5cbit",
+      "id": "163",
+      "name": "Oval 162",
+      "bbox": [
+        807.06,
+        263.02,
+        579.29,
+        579.29
+      ],
+      "geometry": "ellipse",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": {
+        "type": "theme",
+        "value": "accent6",
+        "transform": {
+          "lighten": 0.8
+        }
+      },
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ixgna10n",
+      "id": "161",
+      "name": "Oval 160",
+      "bbox": [
+        -82.92,
+        -82,
+        383.08,
+        383.08
+      ],
+      "geometry": "ellipse",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": {
+        "type": "theme",
+        "value": "accent4",
+        "transform": {
+          "lighten": 0.8
+        }
+      },
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/vep0n6ts",
+      "id": "165",
+      "name": "Picture 3",
+      "bbox": [
+        50,
+        126,
+        360,
+        80
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image35.png",
+        "contentType": "image/png",
+        "byteLength": 1149
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image35.png",
+        "contentType": "image/png",
+        "byteLength": 1149
+      }
+    },
+    {
+      "order": 5,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/wfy1wbax",
+      "id": "166",
+      "name": "Picture 4",
+      "bbox": [
+        460,
+        126,
+        360,
+        80
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image36.png",
+        "contentType": "image/png",
+        "byteLength": 1152
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image36.png",
+        "contentType": "image/png",
+        "byteLength": 1152
+      }
+    },
+    {
+      "order": 6,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/xg7ipgbi",
+      "id": "167",
+      "name": "Picture 5",
+      "bbox": [
+        870,
+        126,
+        360,
+        80
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image37.png",
+        "contentType": "image/png",
+        "byteLength": 1133
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image37.png",
+        "contentType": "image/png",
+        "byteLength": 1133
+      }
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/h4bupgn6",
+      "id": "10",
+      "name": "TextBox 9",
+      "bbox": [
+        50,
+        40,
+        1180,
+        16
+      ],
+      "geometry": "rect",
+      "text": "FRONTEND IMPLEMENTATION",
+      "textPreview": "FRONTEND IMPLEMENTATION",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FRONTEND IMPLEMENTATION"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FRONTEND IMPLEMENTATION",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FRONTEND IMPLEMENTATION",
+              "fontSize": 13,
+              "typeface": "Plus Jakarta Sans ExtraBold",
+              "color": "#E07A1F"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/w32twb6l",
+      "id": "11",
+      "name": "TextBox 10",
+      "bbox": [
+        50,
+        62,
+        1230,
+        40
+      ],
+      "geometry": "rect",
+      "text": "Page Navigation & User Flow",
+      "textPreview": "Page Navigation & User Flow",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Page Navigation & User Flow"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Page Navigation & User Flow",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Page Navigation & User Flow",
+              "fontSize": 32,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#0F172A",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/ih0jyls3",
+      "id": "168",
+      "name": "Picture 13",
+      "bbox": [
+        426,
+        156,
+        18,
+        20
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image38.png",
+        "contentType": "image/png",
+        "byteLength": 392
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image38.png",
+        "contentType": "image/png",
+        "byteLength": 392
+      }
+    },
+    {
+      "order": 10,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/ji9krqto",
+      "id": "169",
+      "name": "Picture 14",
+      "bbox": [
+        836,
+        156,
+        18,
+        20
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image38.png",
+        "contentType": "image/png",
+        "byteLength": 392
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image38.png",
+        "contentType": "image/png",
+        "byteLength": 392
+      }
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/j6dcr65c",
+      "id": "16",
+      "name": "TextBox 15",
+      "bbox": [
+        63.05,
+        147,
+        333.9,
+        19
+      ],
+      "geometry": "rect",
+      "text": "1. Login Portal",
+      "textPreview": "1. Login Portal",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "1. Login Portal"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "1. Login Portal",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "1. Login Portal",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/i54bylor",
+      "id": "17",
+      "name": "TextBox 16",
+      "bbox": [
+        71,
+        170,
+        318,
+        15
+      ],
+      "geometry": "rect",
+      "text": "Role selector & login form",
+      "textPreview": "Role selector & login form",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Role selector & login form"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Role selector & login form",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Role selector & login form",
+              "fontSize": 11.49,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#94A3B8"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/twfux0ne",
+      "id": "18",
+      "name": "TextBox 17",
+      "bbox": [
+        473.05,
+        147,
+        333.9,
+        19
+      ],
+      "geometry": "rect",
+      "text": "2. Credential Check",
+      "textPreview": "2. Credential Check",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "2. Credential Check"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "2. Credential Check",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "2. Credential Check",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/svmt4v6t",
+      "id": "19",
+      "name": "TextBox 18",
+      "bbox": [
+        481,
+        170,
+        318,
+        15
+      ],
+      "geometry": "rect",
+      "text": "Auth verification API call",
+      "textPreview": "Auth verification API call",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Auth verification API call"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Auth verification API call",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Auth verification API call",
+              "fontSize": 11.49,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#CBD5E1"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cbe5g3ih",
+      "id": "20",
+      "name": "TextBox 19",
+      "bbox": [
+        883.05,
+        147,
+        333.9,
+        19
+      ],
+      "geometry": "rect",
+      "text": "3. Role Dashboard",
+      "textPreview": "3. Role Dashboard",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "3. Role Dashboard"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "3. Role Dashboard",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "3. Role Dashboard",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/dcnm98zm",
+      "id": "21",
+      "name": "TextBox 20",
+      "bbox": [
+        891,
+        170,
+        318,
+        15
+      ],
+      "geometry": "rect",
+      "text": "Admin / Doctor / Patient view",
+      "textPreview": "Admin / Doctor / Patient view",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Admin / Doctor / Patient view"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Admin / Doctor / Patient view",
+          "resolvedTextStyle": {
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Admin / Doctor / Patient view",
+              "fontSize": 11.49,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#E2E8F0"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 17,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/tovud4z2",
+      "id": "170",
+      "name": "Picture 100",
+      "bbox": [
+        59.77,
+        287.77,
+        380,
+        246
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image39.png",
+        "contentType": "image/png",
+        "byteLength": 1693
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image39.png",
+        "contentType": "image/png",
+        "byteLength": 1693
+      }
+    },
+    {
+      "order": 18,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/snmd4jyh",
+      "id": "171",
+      "name": "Picture 102",
+      "bbox": [
+        459.77,
+        287.77,
+        380,
+        246
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image40.png",
+        "contentType": "image/png",
+        "byteLength": 1692
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image40.png",
+        "contentType": "image/png",
+        "byteLength": 1692
+      }
+    },
+    {
+      "order": 19,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/rmdcbehw",
+      "id": "172",
+      "name": "Picture 104",
+      "bbox": [
+        850.97,
+        287.77,
+        380,
+        246
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image41.png",
+        "contentType": "image/png",
+        "byteLength": 1688
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image41.png",
+        "contentType": "image/png",
+        "byteLength": 1688
+      }
+    },
+    {
+      "order": 20,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/6lkv29gb",
+      "id": "173",
+      "name": "Picture 106",
+      "bbox": [
+        60.77,
+        288.77,
+        378,
+        37
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image42.png",
+        "contentType": "image/png",
+        "byteLength": 2865
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image42.png",
+        "contentType": "image/png",
+        "byteLength": 2865
+      }
+    },
+    {
+      "order": 21,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/1cvuhoze",
+      "id": "174",
+      "name": "Picture 108",
+      "bbox": [
+        455.74,
+        288.77,
+        378,
+        37
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image43.png",
+        "contentType": "image/png",
+        "byteLength": 2784
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image43.png",
+        "contentType": "image/png",
+        "byteLength": 2784
+      }
+    },
+    {
+      "order": 22,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/gbmd8jyt",
+      "id": "175",
+      "name": "Picture 110",
+      "bbox": [
+        851.97,
+        288.77,
+        378,
+        37
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image44.png",
+        "contentType": "image/png",
+        "byteLength": 2890
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image44.png",
+        "contentType": "image/png",
+        "byteLength": 2890
+      }
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/l83i5ovu",
+      "id": "113",
+      "name": "TextBox 112",
+      "bbox": [
+        108.77,
+        341.77,
+        310,
+        22.5
+      ],
+      "geometry": "rect",
+      "text": "Add/view hospital departments",
+      "textPreview": "Add/view hospital departments",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Add/view hospital departments"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Add/view hospital departments",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Add/view hospital departments",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7al07yd0",
+      "id": "115",
+      "name": "TextBox 114",
+      "bbox": [
+        108.77,
+        376.27,
+        310,
+        45
+      ],
+      "geometry": "rect",
+      "text": "Register doctors with department assignment",
+      "textPreview": "Register doctors with department assignment",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Register doctors with department assignment"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Register doctors with department assignment",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Register doctors with department assignment",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9c3i98v6",
+      "id": "117",
+      "name": "TextBox 116",
+      "bbox": [
+        108.77,
+        433.27,
+        310,
+        21.16
+      ],
+      "geometry": "rect",
+      "text": "Show Register patient profiles",
+      "textPreview": "Show Register patient profiles",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Show Register patient profiles"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Show Register patient profiles",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Show ",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            },
+            {
+              "index": 2,
+              "text": "Register patient profiles",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nehgvedw",
+      "id": "119",
+      "name": "TextBox 118",
+      "bbox": [
+        108.77,
+        467.77,
+        310,
+        22.5
+      ],
+      "geometry": "rect",
+      "text": "Global appointment status monitoring",
+      "textPreview": "Global appointment status monitoring",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Global appointment status monitoring"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Global appointment status monitoring",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Global appointment status monitoring",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qhovu5s3",
+      "id": "121",
+      "name": "TextBox 120",
+      "bbox": [
+        503.74,
+        341.77,
+        310,
+        22.5
+      ],
+      "geometry": "rect",
+      "text": "View assigned appointments queue",
+      "textPreview": "View assigned appointments queue",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "View assigned appointments queue"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "View assigned appointments queue",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "View assigned appointments queue",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 28,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sj6xwfa9",
+      "id": "123",
+      "name": "TextBox 122",
+      "bbox": [
+        503.74,
+        376.27,
+        310,
+        45
+      ],
+      "geometry": "rect",
+      "text": "Update appointment status (Confirmed/Cancelled)",
+      "textPreview": "Update appointment status (Confirmed/Cancelled)",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Update appointment status (Confirmed/Cancelled)"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Update appointment status (Confirmed/Cancelled)",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Update appointment status (Confirmed/Cancelled)",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/id4vqlsr",
+      "id": "125",
+      "name": "TextBox 124",
+      "bbox": [
+        508.77,
+        433.27,
+        310,
+        45
+      ],
+      "geometry": "rect",
+      "text": "Real-time counts for pending & confirmed visits",
+      "textPreview": "Real-time counts for pending & confirmed visits",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Real-time counts for pending & confirmed visits"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Real-time counts for pending & confirmed visits",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Real-time counts for pending & confirmed visits",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 30,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4fmdsvax",
+      "id": "127",
+      "name": "TextBox 126",
+      "bbox": [
+        508.77,
+        483.68,
+        310,
+        22.5
+      ],
+      "geometry": "rect",
+      "text": "Doctor profile management",
+      "textPreview": "Doctor profile management",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Doctor profile management"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Doctor profile management",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Doctor profile management",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 31,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/298f2psb",
+      "id": "129",
+      "name": "TextBox 128",
+      "bbox": [
+        899.97,
+        341.77,
+        310,
+        22.5
+      ],
+      "geometry": "rect",
+      "text": "Self-registration & profile management",
+      "textPreview": "Self-registration & profile management",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Self-registration & profile management"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Self-registration & profile management",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Self-registration & profile management",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 32,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lk729sn2",
+      "id": "131",
+      "name": "TextBox 130",
+      "bbox": [
+        899.97,
+        376.27,
+        310,
+        45
+      ],
+      "geometry": "rect",
+      "text": "Book appointments with department doctors",
+      "textPreview": "Book appointments with department doctors",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Book appointments with department doctors"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Book appointments with department doctors",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Book appointments with department doctors",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 33,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zipk7i5w",
+      "id": "133",
+      "name": "TextBox 132",
+      "bbox": [
+        899.97,
+        433.27,
+        310,
+        22.5
+      ],
+      "geometry": "rect",
+      "text": "Track live status of submitted bookings",
+      "textPreview": "Track live status of submitted bookings",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Track live status of submitted bookings"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Track live status of submitted bookings",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Track live status of submitted bookings",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 34,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/98r2dcny",
+      "id": "135",
+      "name": "TextBox 134",
+      "bbox": [
+        899.97,
+        467.77,
+        310,
+        45
+      ],
+      "geometry": "rect",
+      "text": "Maintain allergies, blood group & contact info",
+      "textPreview": "Maintain allergies, blood group & contact info",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Maintain allergies, blood group & contact info"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Maintain allergies, blood group & contact info",
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Maintain allergies, blood group & contact info",
+              "fontSize": 15,
+              "typeface": "Plus Jakarta Sans",
+              "color": "#334155"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 35,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/fadcfeh8",
+      "id": "176",
+      "name": "Picture 136",
+      "bbox": [
+        80.77,
+        343.77,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 36,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/ep4v69gn",
+      "id": "177",
+      "name": "Picture 138",
+      "bbox": [
+        80.77,
+        378.27,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 37,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/pgfuloza",
+      "id": "178",
+      "name": "Picture 140",
+      "bbox": [
+        80.77,
+        435.27,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 38,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/of6dc3yp",
+      "id": "179",
+      "name": "Picture 142",
+      "bbox": [
+        80.77,
+        469.77,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 39,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/w7idc7up",
+      "id": "180",
+      "name": "Picture 144",
+      "bbox": [
+        475.74,
+        343.77,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 40,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/x8relcba",
+      "id": "181",
+      "name": "Picture 146",
+      "bbox": [
+        471.97,
+        378.27,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 41,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/a50vaxcz",
+      "id": "182",
+      "name": "Picture 148",
+      "bbox": [
+        475.74,
+        438.96,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 42,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/b69wj2tk",
+      "id": "183",
+      "name": "Picture 150",
+      "bbox": [
+        471.97,
+        485.68,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 43,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/o3id87ut",
+      "id": "184",
+      "name": "Picture 152",
+      "bbox": [
+        871.97,
+        386.23,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 44,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/94rehcbe",
+      "id": "185",
+      "name": "Picture 154",
+      "bbox": [
+        871.97,
+        347.81,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 45,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/m1gv6xcn",
+      "id": "186",
+      "name": "Picture 156",
+      "bbox": [
+        871.97,
+        472.19,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    },
+    {
+      "order": 46,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/n29wf2t8",
+      "id": "187",
+      "name": "Picture 158",
+      "bbox": [
+        871.97,
+        434.69,
+        16,
+        16
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image45.png",
+        "contentType": "image/png",
+        "byteLength": 465
+      }
+    }
+  ],
+  "composeRuns": []
+}

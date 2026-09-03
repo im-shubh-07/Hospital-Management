@@ -71,6 +71,13 @@ function updateNavigation() {
   const session = getActiveSession();
   if (!session) return;
 
+  const account = JSON.parse(localStorage.getItem(session.key));
+  const identity = {
+    admin: { name: account?.username || "Admin" },
+    doctor: { name: account?.doctor_name || "Doctor" },
+    patient: { name: account?.patient_name || "Patient" },
+  }[session.key];
+
   document
     .querySelectorAll('a[href="login.html"], a[href="register.html"]')
     .forEach((link) => link.remove());
@@ -88,13 +95,17 @@ function updateNavigation() {
     dashboardLink.href = session.page;
     dashboardLink.textContent = session.label;
 
+    const identityBadge = document.createElement("span");
+    identityBadge.className = "session-identity";
+    identityBadge.textContent = `Welcome, ${identity.name}`;
+
     const logoutButton = document.createElement("button");
     logoutButton.type = "button";
     logoutButton.className = "logoutBtn";
     logoutButton.textContent = "Logout";
     logoutButton.addEventListener("click", logout);
 
-    nav.append(dashboardLink, logoutButton);
+    nav.append(identityBadge, dashboardLink, logoutButton);
   });
 }
 
@@ -141,16 +152,15 @@ if (doctorsList || doctorSelect || modalDoctorSelect) {
           div.className = "card";
 
           div.innerHTML = `
-            <div class="doctor-card-header">
+            <a class="doctor-card-header doctor-profile-trigger" href="doctor-profile.html?id=${doctor.doctor_id}" aria-label="View ${doctor.doctor_name} profile">
               <div class="doctor-avatar" aria-hidden="true">${getInitials(doctor.doctor_name)}</div>
               <div>
                 <h3>${doctor.doctor_name}</h3>
                 <p class="doctor-specialization">${doctor.specialization}</p>
               </div>
-            </div>
+            </a>
             <p>Phone: ${doctor.phone}</p>
             <p>Department: ${doctor.department_name}</p>
-            <a class="profile-link" href="doctor-profile.html?id=${doctor.doctor_id}">View Profile</a>
             <button class="profile-link appointment-link doctor-book-button" type="button" data-open-booking-modal data-doctor-id="${doctor.doctor_id}">Book Appointment</button>
           `;
 
@@ -339,12 +349,21 @@ if (appointmentsList) {
           <p>Date: ${appointment.appointment_date}</p>
           <p>Time: ${appointment.appointment_time}</p>
           <p>Status: ${appointment.status}</p>
+          <p><strong>Bill:</strong> ${appointment.bill_id ? `₹${appointment.bill_amount} (${appointment.payment_status}) - <a href="/api/bills/${appointment.bill_id}/pdf">Download PDF</a>` : "Not generated"}</p>
           <select class="statusSelect" data-id="${appointment.appointment_id}">
             <option value="Pending">Pending</option>
             <option value="Confirmed">Confirmed</option>
             <option value="Cancelled">Cancelled</option>
           </select>
           <button class="updateStatusBtn" data-id="${appointment.appointment_id}">Update Status</button>
+          ${appointment.bill_id ? "" : `
+            <form class="billForm" data-id="${appointment.appointment_id}">
+              <input class="billAmount" type="number" min="0" step="0.01" placeholder="Bill amount" required>
+              <select class="billStatus"><option value="Unpaid">Unpaid</option><option value="Paid">Paid</option></select>
+              <button type="submit">Generate Bill</button>
+              <p class="billMessage"></p>
+            </form>
+          `}
         `;
 
         appointmentsList.appendChild(div);
@@ -468,6 +487,23 @@ if (appointmentsList) {
 
     const result = await response.json();
     alert(result.message);
+  });
+
+  appointmentsList.addEventListener("submit", async (event) => {
+    if (!event.target.classList.contains("billForm")) return;
+    event.preventDefault();
+    const form = event.target;
+    const response = await fetch(`/api/appointments/${form.dataset.id}/bill`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: form.querySelector(".billAmount").value,
+        payment_status: form.querySelector(".billStatus").value,
+      }),
+    });
+    const result = await response.json();
+    form.querySelector(".billMessage").textContent = result.message;
+    if (response.ok) setTimeout(() => window.location.reload(), 650);
   });
 }
 
@@ -686,6 +722,26 @@ if (doctorAppointmentsList || doctorProfileSummary) {
             <p>Date: ${appointment.appointment_date}</p>
             <p>Time: ${appointment.appointment_time}</p>
             <p>Status: ${appointment.status}</p>
+            ${appointment.prescription_id ? `
+              <div class="record-summary"><strong>Prescription recorded</strong><p>Diagnosis: ${appointment.diagnosis}</p></div>
+              <button class="showPrescriptionBtn" type="button">Edit Prescription</button>
+              <form class="prescriptionForm" data-id="${appointment.appointment_id}" data-mode="edit" hidden>
+                <input class="diagnosisInput" type="text" placeholder="Diagnosis" value="${appointment.diagnosis || ""}" required>
+                <textarea class="medicinesInput" placeholder="Medicines and dosage" required>${appointment.medicines || ""}</textarea>
+                <textarea class="instructionsInput" placeholder="Instructions (optional)">${appointment.instructions || ""}</textarea>
+                <button type="submit">Update Prescription</button>
+                <p class="prescriptionMessage"></p>
+              </form>
+            ` : appointment.status === "Confirmed" ? `
+              <button class="showPrescriptionBtn" type="button">Add Prescription</button>
+              <form class="prescriptionForm" data-id="${appointment.appointment_id}" hidden>
+                <input class="diagnosisInput" type="text" placeholder="Diagnosis" required>
+                <textarea class="medicinesInput" placeholder="Medicines and dosage" required></textarea>
+                <textarea class="instructionsInput" placeholder="Instructions (optional)"></textarea>
+                <button type="submit">Save Prescription</button>
+                <p class="prescriptionMessage"></p>
+              </form>
+            ` : `<p class="record-note">Confirm the appointment before adding a prescription.</p>`}
           `;
 
           doctorAppointmentsList.appendChild(div);
@@ -695,6 +751,31 @@ if (doctorAppointmentsList || doctorProfileSummary) {
           doctorAppointmentsList.innerHTML =
             '<p class="empty-state">No appointments have been scheduled for you yet.</p>';
         }
+      });
+
+      doctorAppointmentsList.addEventListener("click", (event) => {
+        if (!event.target.classList.contains("showPrescriptionBtn")) return;
+        event.target.nextElementSibling.hidden = false;
+        event.target.hidden = true;
+      });
+
+      doctorAppointmentsList.addEventListener("submit", async (event) => {
+        if (!event.target.classList.contains("prescriptionForm")) return;
+        event.preventDefault();
+        const form = event.target;
+        const isEdit = form.dataset.mode === "edit";
+        const response = await fetch(`/api/appointments/${form.dataset.id}/prescription`, {
+          method: isEdit ? "PUT" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            diagnosis: form.querySelector(".diagnosisInput").value,
+            medicines: form.querySelector(".medicinesInput").value,
+            instructions: form.querySelector(".instructionsInput").value,
+          }),
+        });
+        const result = await response.json();
+        form.querySelector(".prescriptionMessage").textContent = result.message;
+        if (response.ok) setTimeout(() => window.location.reload(), 650);
       });
     }
   }
@@ -794,6 +875,16 @@ if (patientProfile || patientAppointmentsList) {
             <p>Date: ${appointment.appointment_date}</p>
             <p>Time: ${appointment.appointment_time}</p>
             <p>Status: ${appointment.status}</p>
+            <div class="record-summary">
+              <strong>Prescription</strong>
+              <p>${appointment.diagnosis ? `Diagnosis: ${appointment.diagnosis}` : "Not added yet"}</p>
+              ${appointment.medicines ? `<p>Medicines: ${appointment.medicines}</p>` : ""}
+              ${appointment.instructions ? `<p>Instructions: ${appointment.instructions}</p>` : ""}
+            </div>
+            <div class="record-summary">
+              <strong>Bill</strong>
+              <p>${appointment.bill_id ? `Amount: ₹${appointment.bill_amount} - ${appointment.payment_status}` : "Not generated yet"}</p>
+            </div>
           `;
 
           patientAppointmentsList.appendChild(div);

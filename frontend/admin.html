@@ -27,7 +27,13 @@
 
         <form id="addDoctorForm">
           <input type="text" id="doctorName" placeholder="Doctor Name" required>
-          <input type="text" id="doctorSpecialization" placeholder="Specialization" required>
+          <select id="doctorSpecialization" required>
+            <option value="">Select Specialization</option>
+            <option value="Heart Specialist">Heart Specialist</option>
+            <option value="Brain Specialist">Brain Specialist</option>
+            <option value="Bone Specialist">Bone Specialist</option>
+            <option value="General Physician">General Physician</option>
+          </select>
           <input type="text" id="doctorPhone" placeholder="Phone Number" required>
 
           <select id="departmentSelect" required>
