@@ -461,11 +461,14 @@ app.post("/api/doctors", async (req, res) => {
 });
 
 app.post("/api/admin/login", (req, res) => {
-  const { username, password } = req.body;
-  if (![username, password].every(isNonEmptyString)) {
+  let { username, password } = req.body || {};
+  username = typeof username === "string" ? username.trim() : "";
+  password = typeof password === "string" ? password.trim() : "";
+
+  if (!username || !password) {
     return res.status(400).json({ message: "Username and password are required." });
   }
-  const sql = "SELECT * FROM admins WHERE username = ?";
+  const sql = "SELECT * FROM admins WHERE LOWER(username) = LOWER(?)";
 
   db.query(sql, [username], async (error, results) => {
     if (error) {
@@ -474,7 +477,13 @@ app.post("/api/admin/login", (req, res) => {
       res.status(401).json({ message: "Invalid admin username or password" });
     } else {
       const admin = results[0];
-      const isMatch = (await bcrypt.compare(password, admin.password)) || password === admin.password;
+      let isMatch = false;
+      try {
+        isMatch = (await bcrypt.compare(password, admin.password)) || password === admin.password;
+      } catch (e) {
+        isMatch = password === admin.password;
+      }
+
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid admin username or password" });
       }
@@ -490,11 +499,14 @@ app.post("/api/admin/login", (req, res) => {
 });
 
 app.post("/api/doctor/login", (req, res) => {
-  const { username, password } = req.body;
-  if (![username, password].every(isNonEmptyString)) {
+  let { username, password } = req.body || {};
+  username = typeof username === "string" ? username.trim() : "";
+  password = typeof password === "string" ? password.trim() : "";
+
+  if (!username || !password) {
     return res.status(400).json({ message: "Username and password are required." });
   }
-  const sql = "SELECT doctor_id, doctor_name, specialization, phone, address, username, password FROM doctors WHERE username = ?";
+  const sql = "SELECT doctor_id, doctor_name, specialization, phone, address, username, password FROM doctors WHERE LOWER(username) = LOWER(?)";
 
   db.query(sql, [username], async (error, results) => {
     if (error) {
@@ -503,7 +515,13 @@ app.post("/api/doctor/login", (req, res) => {
       res.status(401).json({ message: "Invalid doctor username or password" });
     } else {
       const doctor = results[0];
-      const isMatch = (await bcrypt.compare(password, doctor.password)) || password === doctor.password;
+      let isMatch = false;
+      try {
+        isMatch = (await bcrypt.compare(password, doctor.password)) || password === doctor.password;
+      } catch (e) {
+        isMatch = password === doctor.password;
+      }
+
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid doctor username or password" });
       }
@@ -520,14 +538,17 @@ app.post("/api/doctor/login", (req, res) => {
 });
 
 app.post("/api/patient/login", (req, res) => {
-  const { username, password } = req.body;
-  if (![username, password].every(isNonEmptyString)) {
+  let { username, password } = req.body || {};
+  username = typeof username === "string" ? username.trim() : "";
+  password = typeof password === "string" ? password.trim() : "";
+
+  if (!username || !password) {
     return res.status(400).json({ message: "Username and password are required." });
   }
   const sql = `
     SELECT patient_id, patient_name, age, gender, phone, address,
       blood_group, allergies, medical_history, emergency_contact, emergency_phone, password
-    FROM patients WHERE username = ?
+    FROM patients WHERE LOWER(username) = LOWER(?)
   `;
 
   db.query(sql, [username], async (error, results) => {
@@ -537,7 +558,13 @@ app.post("/api/patient/login", (req, res) => {
       res.status(401).json({ message: "Invalid patient username or password" });
     } else {
       const patient = results[0];
-      const isMatch = (await bcrypt.compare(password, patient.password)) || password === patient.password;
+      let isMatch = false;
+      try {
+        isMatch = (await bcrypt.compare(password, patient.password)) || password === patient.password;
+      } catch (e) {
+        isMatch = password === patient.password;
+      }
+
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid patient username or password" });
       }
@@ -810,19 +837,19 @@ app.get("/api/appointments/:id/prescription/pdf", (req, res) => {
       prescriptions.medicines,
       prescriptions.instructions,
       prescriptions.created_at,
-      patients.patient_name,
+      COALESCE(patients.patient_name, 'Patient') AS patient_name,
       patients.age,
       patients.gender,
       patients.phone,
-      doctors.doctor_name,
-      doctors.specialization,
+      COALESCE(doctors.doctor_name, 'Consulting Doctor') AS doctor_name,
+      COALESCE(doctors.specialization, 'Specialist Physician') AS specialization,
       departments.department_name,
       DATE_FORMAT(appointments.appointment_date, '%Y-%m-%d') AS appointment_date,
       TIME_FORMAT(appointments.appointment_time, '%H:%i') AS appointment_time
     FROM prescriptions
     JOIN appointments ON appointments.appointment_id = prescriptions.appointment_id
-    JOIN patients ON patients.patient_id = appointments.patient_id
-    JOIN doctors ON doctors.doctor_id = appointments.doctor_id
+    LEFT JOIN patients ON patients.patient_id = appointments.patient_id
+    LEFT JOIN doctors ON doctors.doctor_id = appointments.doctor_id
     LEFT JOIN departments ON departments.department_id = doctors.department_id
     WHERE appointments.appointment_id = ?
   `;
@@ -848,13 +875,14 @@ app.get("/api/appointments/:id/bill/pdf", (req, res) => {
 
   const sql = `
     SELECT bills.bill_id, bills.amount, bills.payment_status,
-      patients.patient_name, doctors.doctor_name,
+      COALESCE(patients.patient_name, 'City Hospital Patient') AS patient_name,
+      COALESCE(doctors.doctor_name, 'Consulting Doctor') AS doctor_name,
       DATE_FORMAT(appointments.appointment_date, '%Y-%m-%d') AS appointment_date,
       TIME_FORMAT(appointments.appointment_time, '%H:%i') AS appointment_time
     FROM bills
     JOIN appointments ON appointments.appointment_id = bills.appointment_id
-    JOIN patients ON patients.patient_id = appointments.patient_id
-    JOIN doctors ON doctors.doctor_id = appointments.doctor_id
+    LEFT JOIN patients ON patients.patient_id = appointments.patient_id
+    LEFT JOIN doctors ON doctors.doctor_id = appointments.doctor_id
     WHERE appointments.appointment_id = ?
   `;
   db.query(sql, [appointmentId], (error, results) => {
@@ -878,13 +906,14 @@ app.get("/api/bills/:id/pdf", (req, res) => {
 
   const sql = `
     SELECT bills.bill_id, bills.amount, bills.payment_status,
-      patients.patient_name, doctors.doctor_name,
+      COALESCE(patients.patient_name, 'City Hospital Patient') AS patient_name,
+      COALESCE(doctors.doctor_name, 'Consulting Doctor') AS doctor_name,
       DATE_FORMAT(appointments.appointment_date, '%Y-%m-%d') AS appointment_date,
       TIME_FORMAT(appointments.appointment_time, '%H:%i') AS appointment_time
     FROM bills
-    JOIN appointments ON appointments.appointment_id = bills.appointment_id
-    JOIN patients ON patients.patient_id = appointments.patient_id
-    JOIN doctors ON doctors.doctor_id = appointments.doctor_id
+    LEFT JOIN appointments ON appointments.appointment_id = bills.appointment_id
+    LEFT JOIN patients ON patients.patient_id = appointments.patient_id
+    LEFT JOIN doctors ON doctors.doctor_id = appointments.doctor_id
     WHERE bills.bill_id = ?
   `;
   db.query(sql, [billId], (error, results) => {

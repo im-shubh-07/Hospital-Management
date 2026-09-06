@@ -1088,34 +1088,70 @@ if (loginForm) {
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const role = loginRole.value;
-    const username = document.getElementById("loginUsername").value;
-    const password = document.getElementById("loginPassword").value;
+    const role = loginRole ? loginRole.value.trim() : "";
+    const username = (document.getElementById("loginUsername")?.value || "").trim();
+    const password = (document.getElementById("loginPassword")?.value || "").trim();
 
-    const response = await fetch(`/api/${role}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      loginMessage.textContent = result.message;
+    if (!role) {
+      loginMessage.textContent = "Please select your role (Admin, Doctor, or Patient).";
+      loginMessage.style.color = "#dc2626";
       return;
     }
 
-    if (role === "admin") {
-      localStorage.setItem("admin", JSON.stringify(result.admin));
-      window.location.href = nextPage || "admin.html";
-    } else if (role === "doctor") {
-      localStorage.setItem("doctor", JSON.stringify(result.doctor));
-      window.location.href = nextPage || "doctor-dashboard.html";
-    } else {
-      localStorage.setItem("patient", JSON.stringify(result.patient));
-      window.location.href = nextPage || "patient-dashboard.html";
+    const submitBtn = document.getElementById("loginSubmitBtn") || loginForm.querySelector("button[type='submit']");
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Logging in...";
+    }
+    loginMessage.textContent = "";
+
+    try {
+      const response = await fetch(`/api/${role}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      let result;
+      try {
+        result = await response.json();
+      } catch (e) {
+        result = { message: "Server returned unexpected response." };
+      }
+
+      if (!response.ok) {
+        loginMessage.textContent = result.message || "Invalid credentials.";
+        loginMessage.style.color = "#dc2626";
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Login";
+        }
+        return;
+      }
+
+      loginMessage.textContent = "✓ Login successful! Redirecting...";
+      loginMessage.style.color = "#16a34a";
+
+      if (role === "admin") {
+        localStorage.setItem("admin", JSON.stringify(result.admin));
+        window.location.href = nextPage || "admin.html";
+      } else if (role === "doctor") {
+        localStorage.setItem("doctor", JSON.stringify(result.doctor));
+        window.location.href = nextPage || "doctor-dashboard.html";
+      } else {
+        localStorage.setItem("patient", JSON.stringify(result.patient));
+        window.location.href = nextPage || "patient-dashboard.html";
+      }
+    } catch (err) {
+      console.error("Login fetch error:", err);
+      loginMessage.textContent = "Cannot connect to server. Please ensure you are on the same Wi-Fi network.";
+      loginMessage.style.color = "#dc2626";
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Login";
+      }
     }
   });
 }
