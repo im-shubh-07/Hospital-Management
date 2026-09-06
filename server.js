@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const bcrypt = require("bcryptjs");
 const db = require("./config/db");
 
@@ -189,11 +190,11 @@ function databaseError(res, error) {
 }
 
 app.use(express.json());
-app.use(express.static("frontend"));
+app.use(express.static(path.join(__dirname, "frontend")));
 
-// app.get("/", (req, res) => {
-//   res.send("City Hospital Server is Running");
-// });
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
 
 app.get("/api/departments", (req, res) => {
   const sql = "SELECT * FROM departments";
