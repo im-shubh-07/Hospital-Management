@@ -373,7 +373,7 @@ app.get("/api/appointments", (req, res) => {
   });
 });
 
-app.post("/api/patients", async (req, res) => {
+app.post("/api/patients", (req, res) => {
   const {
     patient_name, age, gender, phone, address, username, password,
     blood_group, allergies, medical_history, emergency_contact, emergency_phone,
@@ -382,82 +382,74 @@ app.post("/api/patients", async (req, res) => {
   if (
     ![patient_name, gender, phone, address, username, password].every(isNonEmptyString) ||
     !isPositiveInteger(age) ||
-    password?.length < 6
+    password?.length < 4
   ) {
     return res.status(400).json({
-      message: "Please provide all patient details, a valid age, and a password of at least 6 characters.",
+      message: "Please provide all patient details, a valid age, and a password.",
     });
   }
 
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const sql = `
-      INSERT INTO patients (
-        patient_name, age, gender, phone, address, username, password,
-        blood_group, allergies, medical_history, emergency_contact, emergency_phone
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+  const cleanPassword = password.trim();
+  const sql = `
+    INSERT INTO patients (
+      patient_name, age, gender, phone, address, username, password,
+      blood_group, allergies, medical_history, emergency_contact, emergency_phone
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
 
-    db.query(
-      sql,
-      [
-        patient_name, age, gender, phone, address, username, hashedPassword,
-        blood_group || null, allergies || null, medical_history || null,
-        emergency_contact || null, emergency_phone || null,
-      ],
-      (error, results) => {
-        if (error) {
-          databaseError(res, error);
-        } else {
-          res.json({
-            message: "Patient added successfully",
-            patient_id: results.insertId,
-          });
-        }
-      },
-    );
-  } catch (hashError) {
-    res.status(500).json({ message: "Error hashing password" });
-  }
+  db.query(
+    sql,
+    [
+      patient_name.trim(), age, gender, phone.trim(), address.trim(), username.trim(), cleanPassword,
+      blood_group || null, allergies || null, medical_history || null,
+      emergency_contact || null, emergency_phone || null,
+    ],
+    (error, results) => {
+      if (error) {
+        databaseError(res, error);
+      } else {
+        res.json({
+          message: "Patient added successfully",
+          patient_id: results.insertId,
+        });
+      }
+    },
+  );
 });
 
-app.post("/api/doctors", async (req, res) => {
+app.post("/api/doctors", (req, res) => {
   const { doctor_name, specialization, phone, department_id, username, password } = req.body;
 
   if (
     ![doctor_name, specialization, phone, username, password].every(isNonEmptyString) ||
     !isPositiveInteger(department_id) ||
-    password?.length < 6
+    password?.length < 4
   ) {
     return res.status(400).json({
-      message: "Please provide all doctor details, select a department, and use a password of at least 6 characters.",
+      message: "Please provide all doctor details, select a department, and enter a password.",
     });
   }
 
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const sql = `
-      INSERT INTO doctors (doctor_name, specialization, phone, department_id, username, password)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `;
+  const cleanPassword = password.trim();
+  const sql = `
+    INSERT INTO doctors (doctor_name, specialization, phone, department_id, username, password)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
 
-    db.query(
-      sql,
-      [doctor_name, specialization, phone, department_id, username, hashedPassword],
-      (error, results) => {
-        if (error) {
-          databaseError(res, error);
-        } else {
-          res.json({
-            message: "Doctor added successfully",
-            doctor_id: results.insertId,
-          });
-        }
-      },
-    );
-  } catch (hashError) {
-    res.status(500).json({ message: "Error hashing password" });
-  }
+  db.query(
+    sql,
+    [doctor_name.trim(), specialization.trim(), phone.trim(), department_id, username.trim(), cleanPassword],
+    (error, results) => {
+      if (error) {
+        databaseError(res, error);
+      } else {
+        res.json({
+          message: "Doctor added successfully",
+          doctor_id: results.insertId,
+        });
+      }
+    },
+  );
 });
 
 app.post("/api/admin/login", (req, res) => {
@@ -477,21 +469,21 @@ app.post("/api/admin/login", (req, res) => {
       res.status(401).json({ message: "Invalid admin username or password" });
     } else {
       const admin = results[0];
-      let isMatch = false;
-      try {
-        isMatch = (await bcrypt.compare(password, admin.password)) || password === admin.password;
-      } catch (e) {
-        isMatch = password === admin.password;
+      let isMatch = password === admin.password;
+      if (!isMatch && admin.password && admin.password.startsWith("$2")) {
+        try {
+          isMatch = await bcrypt.compare(password, admin.password);
+          if (isMatch) {
+            // Restore plain text password in DB
+            db.query("UPDATE admins SET password = ? WHERE admin_id = ?", [password, admin.admin_id], () => {});
+          }
+        } catch (e) {
+          isMatch = false;
+        }
       }
 
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid admin username or password" });
-      }
-      if (password === admin.password) {
-        const newHash = await bcrypt.hash(password, 10);
-        db.query("UPDATE admins SET password = ? WHERE admin_id = ?", [newHash, admin.admin_id], (updateErr) => {
-          if (updateErr) console.error("Admin password hash update error:", updateErr.message);
-        });
       }
       res.json({ message: "Admin login successful", admin: { admin_id: admin.admin_id, username: admin.username } });
     }
@@ -515,21 +507,21 @@ app.post("/api/doctor/login", (req, res) => {
       res.status(401).json({ message: "Invalid doctor username or password" });
     } else {
       const doctor = results[0];
-      let isMatch = false;
-      try {
-        isMatch = (await bcrypt.compare(password, doctor.password)) || password === doctor.password;
-      } catch (e) {
-        isMatch = password === doctor.password;
+      let isMatch = password === doctor.password;
+      if (!isMatch && doctor.password && doctor.password.startsWith("$2")) {
+        try {
+          isMatch = await bcrypt.compare(password, doctor.password);
+          if (isMatch) {
+            // Restore plain text password in DB
+            db.query("UPDATE doctors SET password = ? WHERE doctor_id = ?", [password, doctor.doctor_id], () => {});
+          }
+        } catch (e) {
+          isMatch = false;
+        }
       }
 
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid doctor username or password" });
-      }
-      if (password === doctor.password) {
-        const newHash = await bcrypt.hash(password, 10);
-        db.query("UPDATE doctors SET password = ? WHERE doctor_id = ?", [newHash, doctor.doctor_id], (updateErr) => {
-          if (updateErr) console.error("Doctor password hash update error:", updateErr.message);
-        });
       }
       delete doctor.password;
       res.json({ message: "Doctor login successful", doctor });
@@ -558,21 +550,21 @@ app.post("/api/patient/login", (req, res) => {
       res.status(401).json({ message: "Invalid patient username or password" });
     } else {
       const patient = results[0];
-      let isMatch = false;
-      try {
-        isMatch = (await bcrypt.compare(password, patient.password)) || password === patient.password;
-      } catch (e) {
-        isMatch = password === patient.password;
+      let isMatch = password === patient.password;
+      if (!isMatch && patient.password && patient.password.startsWith("$2")) {
+        try {
+          isMatch = await bcrypt.compare(password, patient.password);
+          if (isMatch) {
+            // Restore plain text password in DB
+            db.query("UPDATE patients SET password = ? WHERE patient_id = ?", [password, patient.patient_id], () => {});
+          }
+        } catch (e) {
+          isMatch = false;
+        }
       }
 
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid patient username or password" });
-      }
-      if (password === patient.password) {
-        const newHash = await bcrypt.hash(password, 10);
-        db.query("UPDATE patients SET password = ? WHERE patient_id = ?", [newHash, patient.patient_id], (updateErr) => {
-          if (updateErr) console.error("Patient password hash update error:", updateErr.message);
-        });
       }
       delete patient.password;
       res.json({ message: "Patient login successful", patient });
