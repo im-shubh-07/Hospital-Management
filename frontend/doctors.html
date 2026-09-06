@@ -7,6 +7,22 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="emergency-sos-bar" role="complementary" aria-label="Emergency Helpline">
+    <div class="emergency-sos-container">
+      <div class="emergency-sos-left">
+        <span class="emergency-pulse-badge">
+          <span class="pulse-dot"></span>
+          24/7 EMERGENCY &amp; TRAUMA
+        </span>
+        <span class="emergency-info">Ambulance &amp; Critical Care: <strong>+91 98765-00000</strong></span>
+      </div>
+      <div class="emergency-sos-right">
+        <span class="emergency-tollfree">National Toll-Free: <strong>108</strong></span>
+        <a href="tel:108" class="emergency-call-btn">🚨 Call Emergency</a>
+      </div>
+    </div>
+  </div>
+
   <header>
     <h1>City Hospital</h1>
     <p>Our Doctors</p>
@@ -21,8 +37,29 @@
   </header>
 
   <main>
+    <section class="doctor-directory-header">
+      <h2>Find Your Specialist</h2>
+      <p>Search by doctor name, medical department, or your current health symptoms.</p>
+      
+      <div class="doctor-search-wrapper">
+        <input type="text" id="doctorSearchInput" placeholder="🔍 Search doctor, department, or symptoms (e.g. chest pain, headache, fever)...">
+      </div>
+
+      <div class="symptom-chips-container" id="symptomChips">
+        <button type="button" class="symptom-chip active" data-symptom="all">All Specialists</button>
+        <button type="button" class="symptom-chip" data-symptom="heart">❤️ Heart & Chest Pain</button>
+        <button type="button" class="symptom-chip" data-symptom="brain">🧠 Headache & Migraine</button>
+        <button type="button" class="symptom-chip" data-symptom="bone">🦴 Joint & Bone Pain</button>
+        <button type="button" class="symptom-chip" data-symptom="fever">🩺 Fever, Cold & Flu</button>
+      </div>
+
+      <div class="search-status-bar">
+        <p id="searchCountNotice" class="search-count-notice">Loading specialists...</p>
+      </div>
+    </section>
+
     <section>
-      <h2>Doctors List</h2>
+      <h2>Available Doctors</h2>
       <div id="doctorsList"></div>
     </section>
   </main>
@@ -43,8 +80,15 @@
           <option value="">Select Doctor</option>
         </select>
         <input type="date" id="modalAppointmentDate" required>
-        <input type="time" id="modalAppointmentTime" required>
-        <button type="submit">Confirm Appointment</button>
+        <input type="hidden" id="modalAppointmentTime" required>
+
+        <div id="modalTimeSlotsSection" class="time-slots-section" hidden>
+          <label class="slot-picker-label">Select Available Time Slot (30 Mins):</label>
+          <div id="modalTimeSlotsContainer" class="time-slots-container"></div>
+          <p id="modalSelectedSlotNotice" class="selected-slot-notice"></p>
+        </div>
+
+        <button type="submit" id="modalBookSubmitBtn">Confirm Appointment</button>
       </form>
       <p id="modalBookingMessage"></p>
     </section>

@@ -32,9 +32,15 @@
           </select>
 
           <input type="date" id="appointmentDate" required>
-          <input type="time" id="appointmentTime" required>
+          <input type="hidden" id="appointmentTime" required>
 
-          <button type="submit">Book Appointment</button>
+          <div id="timeSlotsSection" class="time-slots-section" hidden>
+            <label class="slot-picker-label">Select Available Time Slot (30 Mins):</label>
+            <div id="timeSlotsContainer" class="time-slots-container"></div>
+            <p id="selectedSlotNotice" class="selected-slot-notice"></p>
+          </div>
+
+          <button type="submit" id="bookSubmitBtn">Book Appointment</button>
         </form>
 
         <p id="bookingMessage"></p>

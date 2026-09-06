@@ -7,6 +7,22 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="emergency-sos-bar" role="complementary" aria-label="Emergency Helpline">
+    <div class="emergency-sos-container">
+      <div class="emergency-sos-left">
+        <span class="emergency-pulse-badge">
+          <span class="pulse-dot"></span>
+          24/7 EMERGENCY &amp; TRAUMA
+        </span>
+        <span class="emergency-info">Ambulance &amp; Critical Care: <strong>+91 98765-00000</strong></span>
+      </div>
+      <div class="emergency-sos-right">
+        <span class="emergency-tollfree">National Toll-Free: <strong>108</strong></span>
+        <a href="tel:108" class="emergency-call-btn">🚨 Call Emergency</a>
+      </div>
+    </div>
+  </div>
+
   <header>
     <h1>City Hospital</h1>
     <p>Hospital Management System</p>
@@ -27,6 +43,43 @@
       <button class="button-link" data-open-booking-modal type="button">Book Appointment</button>
       <a class="button-link secondary" href="login.html">Login</a>
       <a class="button-link secondary" href="register.html">Patient Register</a>
+    </section>
+
+    <section class="trust-stats-section" aria-label="Hospital Statistics & Trust Highlights">
+      <div class="trust-stats-grid">
+        <div class="trust-stat-card">
+          <div class="stat-icon-wrapper stat-specialist">🏥</div>
+          <div class="stat-text-group">
+            <span class="stat-number">4+</span>
+            <span class="stat-label">Specialist Wings</span>
+            <span class="stat-subtext">Cardio, Neuro, Ortho &amp; General</span>
+          </div>
+        </div>
+        <div class="trust-stat-card">
+          <div class="stat-icon-wrapper stat-doctors">👨‍⚕️</div>
+          <div class="stat-text-group">
+            <span class="stat-number">15+</span>
+            <span class="stat-label">Verified Specialists</span>
+            <span class="stat-subtext">Experienced Medical Board</span>
+          </div>
+        </div>
+        <div class="trust-stat-card">
+          <div class="stat-icon-wrapper stat-emergency">⚡</div>
+          <div class="stat-text-group">
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">Trauma &amp; ICU Care</span>
+            <span class="stat-subtext">Zero Waiting for Criticals</span>
+          </div>
+        </div>
+        <div class="trust-stat-card">
+          <div class="stat-icon-wrapper stat-rating">⭐</div>
+          <div class="stat-text-group">
+            <span class="stat-number">4.9 / 5</span>
+            <span class="stat-label">Patient Trust Score</span>
+            <span class="stat-subtext">From 12,000+ Cured Patients</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section>
@@ -66,8 +119,15 @@
           <option value="">Select Doctor</option>
         </select>
         <input type="date" id="modalAppointmentDate" required>
-        <input type="time" id="modalAppointmentTime" required>
-        <button type="submit">Confirm Appointment</button>
+        <input type="hidden" id="modalAppointmentTime" required>
+
+        <div id="modalTimeSlotsSection" class="time-slots-section" hidden>
+          <label class="slot-picker-label">Select Available Time Slot (30 Mins):</label>
+          <div id="modalTimeSlotsContainer" class="time-slots-container"></div>
+          <p id="modalSelectedSlotNotice" class="selected-slot-notice"></p>
+        </div>
+
+        <button type="submit" id="modalBookSubmitBtn">Confirm Appointment</button>
       </form>
       <p id="modalBookingMessage"></p>
     </section>

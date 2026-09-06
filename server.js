@@ -136,6 +136,30 @@ app.get("/api/doctors/:id", (req, res) => {
   });
 });
 
+app.get("/api/doctors/:id/booked-slots", (req, res) => {
+  const doctorId = req.params.id;
+  const { date } = req.query;
+
+  if (!isPositiveInteger(doctorId) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return res.status(400).json({ message: "Invalid doctor ID or date format." });
+  }
+
+  const sql = `
+    SELECT TIME_FORMAT(appointment_time, '%H:%i') AS slot_time
+    FROM appointments
+    WHERE doctor_id = ? AND appointment_date = ? AND status <> 'Cancelled'
+  `;
+
+  db.query(sql, [doctorId, date], (error, results) => {
+    if (error) {
+      databaseError(res, error);
+    } else {
+      const bookedSlots = results.map((row) => row.slot_time);
+      res.json({ bookedSlots });
+    }
+  });
+});
+
 app.put("/api/doctors/:id/profile", (req, res) => {
   const doctorId = req.params.id;
   const { doctor_name, specialization, phone } = req.body;
@@ -314,7 +338,9 @@ app.post("/api/admin/login", (req, res) => {
       }
       if (password === admin.password) {
         const newHash = await bcrypt.hash(password, 10);
-        db.query("UPDATE admins SET password = ? WHERE admin_id = ?", [newHash, admin.admin_id]);
+        db.query("UPDATE admins SET password = ? WHERE admin_id = ?", [newHash, admin.admin_id], (updateErr) => {
+          if (updateErr) console.error("Admin password hash update error:", updateErr.message);
+        });
       }
       res.json({ message: "Admin login successful", admin: { admin_id: admin.admin_id, username: admin.username } });
     }
@@ -341,7 +367,9 @@ app.post("/api/doctor/login", (req, res) => {
       }
       if (password === doctor.password) {
         const newHash = await bcrypt.hash(password, 10);
-        db.query("UPDATE doctors SET password = ? WHERE doctor_id = ?", [newHash, doctor.doctor_id]);
+        db.query("UPDATE doctors SET password = ? WHERE doctor_id = ?", [newHash, doctor.doctor_id], (updateErr) => {
+          if (updateErr) console.error("Doctor password hash update error:", updateErr.message);
+        });
       }
       delete doctor.password;
       res.json({ message: "Doctor login successful", doctor });
@@ -373,7 +401,9 @@ app.post("/api/patient/login", (req, res) => {
       }
       if (password === patient.password) {
         const newHash = await bcrypt.hash(password, 10);
-        db.query("UPDATE patients SET password = ? WHERE patient_id = ?", [newHash, patient.patient_id]);
+        db.query("UPDATE patients SET password = ? WHERE patient_id = ?", [newHash, patient.patient_id], (updateErr) => {
+          if (updateErr) console.error("Patient password hash update error:", updateErr.message);
+        });
       }
       delete patient.password;
       res.json({ message: "Patient login successful", patient });
