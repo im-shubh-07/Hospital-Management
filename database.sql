@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS doctors (
   doctor_name VARCHAR(100) NOT NULL,
   specialization VARCHAR(100) NOT NULL,
   phone VARCHAR(20) NOT NULL,
+  address VARCHAR(255) DEFAULT 'OPD Clinic, Room 102, City Hospital',
   department_id INT NOT NULL,
   username VARCHAR(50) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
@@ -63,7 +64,7 @@ CREATE TABLE IF NOT EXISTS appointments (
   doctor_id INT NOT NULL,
   appointment_date DATE NOT NULL,
   appointment_time TIME NOT NULL,
-  status ENUM('Pending', 'Confirmed', 'Cancelled')
+  status ENUM('Pending', 'Confirmed', 'Completed', 'Cancelled')
     NOT NULL DEFAULT 'Pending',
 
   CONSTRAINT appointments_patient_fk

@@ -21,7 +21,18 @@
     </aside>
     <main class="dashboard-main">
       <section>
-        <h2 id="patientWelcome">My Appointments</h2>
+        <div class="patient-dashboard-header">
+          <div>
+            <h2 id="patientWelcome">My Appointments</h2>
+            <p class="section-subtitle">Real-time status tracking, consultation timeline, and digital medical reports</p>
+          </div>
+          <div class="live-tracker-status-badge">
+            <span class="pulse-live-dot"></span>
+            <span class="live-tracker-text">Live Status Tracking</span>
+            <button type="button" id="patientManualRefreshBtn" class="refresh-pill-btn" title="Refresh Live Status">🔄 Refresh</button>
+          </div>
+        </div>
+        <div id="patientLiveToast" class="doctor-toast" hidden></div>
         <div id="patientAppointmentsList"></div>
       </section>
     </main>

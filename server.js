@@ -5,7 +5,7 @@ const db = require("./config/db");
 const app = express();
 // const PORT = 5001;
 const PORT = process.env.PORT || 5001;
-const APPOINTMENT_STATUSES = ["Pending", "Confirmed", "Cancelled"];
+const APPOINTMENT_STATUSES = ["Pending", "Confirmed", "Completed", "Cancelled"];
 
 const isNonEmptyString = (value) =>
   typeof value === "string" && value.trim().length > 0;
@@ -13,52 +13,174 @@ const isPositiveInteger = (value) => Number.isInteger(Number(value)) && Number(v
 
 function escapePdfText(value) {
   return String(value ?? "")
-    .replace(/\\\\/g, "\\\\\\\\")
+    .replace(/\\/g, "\\\\")
     .replace(/\(/g, "\\(")
     .replace(/\)/g, "\\)")
     .replace(/[^\x20-\x7E]/g, "?");
 }
 
-function createBillPdf(bill) {
-  const lines = [
-    "CITY HOSPITAL",
-    "Medical Bill",
-    "",
-    `Bill No: ${bill.bill_id}`,
-    `Patient: ${bill.patient_name}`,
-    `Doctor: ${bill.doctor_name}`,
-    `Appointment Date: ${bill.appointment_date}`,
-    `Appointment Time: ${bill.appointment_time}`,
-    "",
-    `Amount: INR ${Number(bill.amount).toFixed(2)}`,
-    `Payment Status: ${bill.payment_status}`,
-    "",
-    "Thank you for choosing City Hospital.",
-  ];
-  const textCommands = lines
-    .map((line, index) => `BT /F${index < 2 ? 2 : 1} ${index === 0 ? 22 : index === 1 ? 15 : 12} Tf 54 ${760 - index * 32} Td (${escapePdfText(line)}) Tj ET`)
-    .join("\n");
+function buildPdfDocument(streamCommands) {
+  const streamContent = streamCommands.join("\n");
+  const streamLength = Buffer.byteLength(streamContent, "utf8");
+
   const objects = [
     "<< /Type /Catalog /Pages 2 0 R >>",
     "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
     "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>",
-    `<< /Length ${Buffer.byteLength(textCommands, "utf8")} >>\nstream\n${textCommands}\nendstream`,
+    `<< /Length ${streamLength} >>\nstream\n${streamContent}\nendstream`,
     "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
     "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>",
   ];
+
   let pdf = "%PDF-1.4\n";
   const offsets = [0];
-  objects.forEach((object, index) => {
+  objects.forEach((obj) => {
     offsets.push(Buffer.byteLength(pdf, "utf8"));
-    pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+    pdf += `${offsets.length - 1} 0 obj\n${obj}\nendobj\n`;
   });
   const xrefOffset = Buffer.byteLength(pdf, "utf8");
   pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
-  offsets.slice(1).forEach((offset) => {
-    pdf += `${String(offset).padStart(10, "0")} 00000 n \n`;
+  offsets.slice(1).forEach((off) => {
+    pdf += `${String(off).padStart(10, "0")} 00000 n \n`;
   });
   pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
   return Buffer.from(pdf, "utf8");
+}
+
+function createPrescriptionPdf(data) {
+  const c = [];
+  // Header navy banner
+  c.push("0.06 0.16 0.26 rg 0 710 612 82 re f");
+  c.push("0.01 0.52 0.78 rg 0 706 612 4 re f");
+
+  // Hospital Title & Subtitle
+  c.push("1 1 1 rg BT /F2 20 Tf 40 755 Td (" + escapePdfText("CITY HOSPITAL & RESEARCH CENTRE") + ") Tj ET");
+  c.push("0.85 0.9 0.95 rg BT /F1 9.5 Tf 40 735 Td (" + escapePdfText("24/7 Emergency Helpline: 108 / +91 98765-00000 | NABH Accredited Multispecialty") + ") Tj ET");
+  c.push("0.85 0.9 0.95 rg BT /F1 9.5 Tf 40 720 Td (" + escapePdfText("Department of " + (data.department_name || "Clinical Medicine")) + ") Tj ET");
+
+  // Patient Info Box
+  c.push("0.96 0.97 0.99 rg 40 605 532 85 re f");
+  c.push("0.85 0.9 0.95 RG 1 w 40 605 532 85 re s");
+  c.push("0.06 0.16 0.26 rg BT /F2 11 Tf 54 670 Td (" + escapePdfText("PATIENT DETAILS") + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 54 650 Td (" + escapePdfText("Patient Name: " + (data.patient_name || "N/A")) + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 54 632 Td (" + escapePdfText("Age / Gender: " + (data.age ? data.age + " Yrs" : "N/A") + " / " + (data.gender || "N/A") + "    Phone: " + (data.phone || "N/A")) + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 54 615 Td (" + escapePdfText("Date: " + (data.appointment_date || "N/A") + "    Time Slot: " + (data.appointment_time || "N/A")) + ") Tj ET");
+
+  c.push("0.06 0.16 0.26 rg BT /F2 11 Tf 320 670 Td (" + escapePdfText("CONSULTING SPECIALIST") + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 320 650 Td (" + escapePdfText("Doctor: " + (data.doctor_name || "N/A")) + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 320 632 Td (" + escapePdfText("Specialization: " + (data.specialization || "Specialist")) + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 320 615 Td (" + escapePdfText("Prescription ID: RX-" + (data.prescription_id || data.appointment_id || "101")) + ") Tj ET");
+
+  // Diagnosis Section
+  c.push("0.06 0.16 0.26 rg BT /F2 12 Tf 40 575 Td (" + escapePdfText("1. CLINICAL DIAGNOSIS") + ") Tj ET");
+  c.push("0.97 0.98 0.99 rg 40 535 532 30 re f");
+  c.push("0.85 0.9 0.95 RG 1 w 40 535 532 30 re s");
+  const diagnosisText = String(data.diagnosis || "Routine Clinical Examination").substring(0, 80);
+  c.push("0.1 0.2 0.35 rg BT /F2 10.5 Tf 54 546 Td (" + escapePdfText(diagnosisText) + ") Tj ET");
+
+  // Medicines Section
+  c.push("0.06 0.16 0.26 rg BT /F2 12 Tf 40 505 Td (" + escapePdfText("2. RX - PRESCRIBED MEDICINES & DOSAGE") + ") Tj ET");
+  c.push("0.91 0.95 0.98 rg 40 470 532 24 re f");
+  c.push("0.06 0.16 0.26 rg BT /F2 9.5 Tf 54 477 Td (" + escapePdfText("MEDICINES & INSTRUCTIONS") + ") Tj ET");
+
+  const medLines = String(data.medicines || "No specific medications prescribed.")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .slice(0, 8);
+
+  let yPos = 445;
+  medLines.forEach((med, idx) => {
+    c.push("0.98 0.98 0.99 rg 40 " + (yPos - 4) + " 532 20 re f");
+    c.push("0.88 0.91 0.95 RG 0.5 w 40 " + (yPos - 4) + " 532 20 re s");
+    c.push("0.1 0.2 0.3 rg BT /F1 9.5 Tf 54 " + yPos + " Td (" + escapePdfText((idx + 1) + ". " + med.substring(0, 80)) + ") Tj ET");
+    yPos -= 24;
+  });
+
+  // Instructions Section
+  yPos -= 10;
+  c.push("0.06 0.16 0.26 rg BT /F2 12 Tf 40 " + yPos + " Td (" + escapePdfText("3. ADVICE & SPECIAL INSTRUCTIONS") + ") Tj ET");
+  yPos -= 36;
+  c.push("0.97 0.98 0.99 rg 40 " + yPos + " 532 30 re f");
+  c.push("0.85 0.9 0.95 RG 1 w 40 " + yPos + " 532 30 re s");
+  const adviceText = String(data.instructions || "Drink plenty of water, take adequate rest, and review after 5 days.").substring(0, 85);
+  c.push("0.2 0.25 0.3 rg BT /F1 9.5 Tf 54 " + (yPos + 10) + " Td (" + escapePdfText(adviceText) + ") Tj ET");
+
+  // Bottom Divider & Signatures
+  c.push("0.8 0.85 0.9 RG 1 w 40 100 532 0 re s");
+  c.push("0.4 0.45 0.5 rg BT /F1 8 Tf 40 85 Td (" + escapePdfText("This is an official computer-generated medical prescription issued by City Hospital.") + ") Tj ET");
+  c.push("0.4 0.45 0.5 rg BT /F1 8 Tf 40 72 Td (" + escapePdfText("Valid for dispensing at all registered hospital and retail pharmacies.") + ") Tj ET");
+  c.push("0.06 0.16 0.26 rg BT /F2 10.5 Tf 380 85 Td (" + escapePdfText(data.doctor_name || "Doctor Signatory") + ") Tj ET");
+  c.push("0.3 0.35 0.4 rg BT /F1 8.5 Tf 380 72 Td (" + escapePdfText("Verified Medical Practitioner - Seal & Sign") + ") Tj ET");
+
+  return buildPdfDocument(c);
+}
+
+function createBillPdf(bill) {
+  const c = [];
+  // Top header navy rectangle
+  c.push("0.06 0.16 0.26 rg 0 710 612 82 re f");
+  c.push("0.01 0.52 0.78 rg 0 706 612 4 re f");
+
+  c.push("1 1 1 rg BT /F2 20 Tf 40 755 Td (" + escapePdfText("CITY HOSPITAL & RESEARCH CENTRE") + ") Tj ET");
+  c.push("0.85 0.9 0.95 rg BT /F1 9.5 Tf 40 735 Td (" + escapePdfText("OFFICIAL MEDICAL INVOICE & RECEIPT") + ") Tj ET");
+  c.push("0.85 0.9 0.95 rg BT /F1 9.5 Tf 40 720 Td (" + escapePdfText("GSTIN: 27AABCC1234F1Z5 | Helpline: 108 / +91 98765-00000") + ") Tj ET");
+
+  // Info Box
+  c.push("0.96 0.97 0.99 rg 40 605 532 85 re f");
+  c.push("0.85 0.9 0.95 RG 1 w 40 605 532 85 re s");
+  c.push("0.06 0.16 0.26 rg BT /F2 11 Tf 54 670 Td (" + escapePdfText("PATIENT INVOICE TO") + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 54 650 Td (" + escapePdfText("Patient Name: " + (bill.patient_name || "N/A")) + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 54 632 Td (" + escapePdfText("Doctor: " + (bill.doctor_name || "N/A")) + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 54 615 Td (" + escapePdfText("Appointment: " + (bill.appointment_date || "N/A") + " at " + (bill.appointment_time || "N/A")) + ") Tj ET");
+
+  c.push("0.06 0.16 0.26 rg BT /F2 11 Tf 320 670 Td (" + escapePdfText("INVOICE SUMMARY") + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 320 650 Td (" + escapePdfText("Invoice No: INV-" + bill.bill_id) + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 320 632 Td (" + escapePdfText("Billing Date: " + (bill.appointment_date || new Date().toISOString().split("T")[0])) + ") Tj ET");
+  c.push("0.2 0.25 0.3 rg BT /F1 10 Tf 320 615 Td (" + escapePdfText("Payment Status: " + bill.payment_status) + ") Tj ET");
+
+  // Charges Table
+  c.push("0.06 0.16 0.26 rg BT /F2 12 Tf 40 575 Td (" + escapePdfText("BILLING BREAKDOWN") + ") Tj ET");
+  c.push("0.91 0.95 0.98 rg 40 540 532 24 re f");
+  c.push("0.06 0.16 0.26 rg BT /F2 9.5 Tf 54 547 Td (" + escapePdfText("DESCRIPTION") + ") Tj 350 0 Td (" + escapePdfText("AMOUNT (INR)") + ") Tj ET");
+
+  const totalAmount = Number(bill.amount || 500);
+  const consultFee = (totalAmount * 0.85).toFixed(2);
+  const adminFee = (totalAmount * 0.15).toFixed(2);
+
+  c.push("0.98 0.98 0.99 rg 40 514 532 24 re f");
+  c.push("0.88 0.91 0.95 RG 0.5 w 40 514 532 24 re s");
+  c.push("0.1 0.2 0.3 rg BT /F1 9.5 Tf 54 521 Td (" + escapePdfText("1. Specialist Doctor OPD Consultation") + ") Tj 350 0 Td (" + escapePdfText("INR " + consultFee) + ") Tj ET");
+
+  c.push("0.98 0.98 0.99 rg 40 488 532 24 re f");
+  c.push("0.88 0.91 0.95 RG 0.5 w 40 488 532 24 re s");
+  c.push("0.1 0.2 0.3 rg BT /F1 9.5 Tf 54 495 Td (" + escapePdfText("2. Hospital Facility & Clinical Registration") + ") Tj 350 0 Td (" + escapePdfText("INR " + adminFee) + ") Tj ET");
+
+  // Total Box
+  c.push("0.93 0.96 0.99 rg 40 450 532 28 re f");
+  c.push("0.01 0.52 0.78 RG 1.5 w 40 450 532 28 re s");
+  c.push("0.06 0.16 0.26 rg BT /F2 11 Tf 54 458 Td (" + escapePdfText("TOTAL AMOUNT PAID / PAYABLE") + ") Tj 350 0 Td (" + escapePdfText("INR " + totalAmount.toFixed(2)) + ") Tj ET");
+
+  // Payment Status Stamp Box
+  const isPaid = String(bill.payment_status).toLowerCase() === "paid";
+  if (isPaid) {
+    c.push("0.92 0.99 0.95 rg 40 380 200 40 re f");
+    c.push("0.05 0.59 0.41 RG 1.5 w 40 380 200 40 re s");
+    c.push("0.02 0.45 0.31 rg BT /F2 13 Tf 58 393 Td (" + escapePdfText("[ PAID - THANK YOU ]") + ") Tj ET");
+  } else {
+    c.push("0.99 0.98 0.92 rg 40 380 200 40 re f");
+    c.push("0.85 0.47 0.02 RG 1.5 w 40 380 200 40 re s");
+    c.push("0.75 0.35 0.01 rg BT /F2 13 Tf 54 393 Td (" + escapePdfText("[ PAYMENT PENDING ]") + ") Tj ET");
+  }
+
+  // Footer & Signatures
+  c.push("0.8 0.85 0.9 RG 1 w 40 100 532 0 re s");
+  c.push("0.4 0.45 0.5 rg BT /F1 8 Tf 40 85 Td (" + escapePdfText("Official computer-generated receipt. City Hospital Management System.") + ") Tj ET");
+  c.push("0.4 0.45 0.5 rg BT /F1 8 Tf 40 72 Td (" + escapePdfText("For queries, contact accounts@cityhospital.com or call +91 98765-00000.") + ") Tj ET");
+  c.push("0.06 0.16 0.26 rg BT /F2 10.5 Tf 380 85 Td (" + escapePdfText("City Hospital Accounts Dept.") + ") Tj ET");
+  c.push("0.3 0.35 0.4 rg BT /F1 8.5 Tf 380 72 Td (" + escapePdfText("Authorized Finance Signatory") + ") Tj ET");
+
+  return buildPdfDocument(c);
 }
 
 function databaseError(res, error) {
@@ -92,6 +214,7 @@ app.get("/api/doctors", (req, res) => {
       doctors.doctor_name,
       doctors.specialization,
       doctors.phone,
+      doctors.address,
       departments.department_name
     FROM doctors
     JOIN departments ON doctors.department_id = departments.department_id
@@ -118,6 +241,7 @@ app.get("/api/doctors/:id", (req, res) => {
       doctors.doctor_name,
       doctors.specialization,
       doctors.phone,
+      doctors.address,
       departments.department_name,
       departments.location
     FROM doctors
@@ -162,28 +286,39 @@ app.get("/api/doctors/:id/booked-slots", (req, res) => {
 
 app.put("/api/doctors/:id/profile", (req, res) => {
   const doctorId = req.params.id;
-  const { doctor_name, specialization, phone } = req.body;
+  const { doctor_name, specialization, phone, address } = req.body;
 
   if (
     !isPositiveInteger(doctorId) ||
     ![doctor_name, specialization, phone].every(isNonEmptyString)
   ) {
-    return res.status(400).json({ message: "Please provide valid profile details." });
+    return res.status(400).json({ message: "Please provide valid doctor name, specialization, and phone." });
   }
+
+  const docAddress = typeof address === "string" ? address.trim() : "";
 
   const sql = `
     UPDATE doctors
-    SET doctor_name = ?, specialization = ?, phone = ?
+    SET doctor_name = ?, specialization = ?, phone = ?, address = ?
     WHERE doctor_id = ?
   `;
 
-  db.query(sql, [doctor_name.trim(), specialization.trim(), phone.trim(), doctorId], (error, results) => {
+  db.query(sql, [doctor_name.trim(), specialization.trim(), phone.trim(), docAddress, doctorId], (error, results) => {
     if (error) {
       databaseError(res, error);
     } else if (results.affectedRows === 0) {
       res.status(404).json({ message: "Doctor not found." });
     } else {
-      res.json({ message: "Profile updated successfully." });
+      db.query(
+        `SELECT doctor_id, doctor_name, specialization, phone, address, username, department_id FROM doctors WHERE doctor_id = ?`,
+        [doctorId],
+        (err, docResults) => {
+          res.json({
+            message: "Doctor profile & address updated successfully.",
+            doctor: docResults && docResults[0] ? docResults[0] : null,
+          });
+        }
+      );
     }
   });
 });
@@ -209,17 +344,24 @@ app.get("/api/appointments", (req, res) => {
     SELECT 
       appointments.appointment_id,
       patients.patient_name,
+      patients.phone AS patient_phone,
       doctors.doctor_name,
+      doctors.specialization,
       DATE_FORMAT(appointments.appointment_date, '%Y-%m-%d') AS appointment_date,
       TIME_FORMAT(appointments.appointment_time, '%H:%i') AS appointment_time,
       appointments.status,
       bills.bill_id,
       bills.amount AS bill_amount,
-      bills.payment_status
+      bills.payment_status,
+      prescriptions.prescription_id,
+      prescriptions.diagnosis,
+      prescriptions.medicines
     FROM appointments
     JOIN patients ON appointments.patient_id = patients.patient_id
     JOIN doctors ON appointments.doctor_id = doctors.doctor_id
     LEFT JOIN bills ON bills.appointment_id = appointments.appointment_id
+    LEFT JOIN prescriptions ON prescriptions.appointment_id = appointments.appointment_id
+    ORDER BY appointments.appointment_date DESC, appointments.appointment_time DESC
   `;
 
   db.query(sql, (error, results) => {
@@ -352,7 +494,7 @@ app.post("/api/doctor/login", (req, res) => {
   if (![username, password].every(isNonEmptyString)) {
     return res.status(400).json({ message: "Username and password are required." });
   }
-  const sql = "SELECT doctor_id, doctor_name, specialization, phone, password FROM doctors WHERE username = ?";
+  const sql = "SELECT doctor_id, doctor_name, specialization, phone, address, username, password FROM doctors WHERE username = ?";
 
   db.query(sql, [username], async (error, results) => {
     if (error) {
@@ -453,6 +595,7 @@ app.get("/api/doctor/:id/summary", (req, res) => {
       COUNT(*) AS total_appointments,
       SUM(status = 'Pending') AS pending_appointments,
       SUM(status = 'Confirmed') AS confirmed_appointments,
+      SUM(status = 'Completed') AS completed_appointments,
       SUM(status = 'Cancelled') AS cancelled_appointments
     FROM appointments
     WHERE doctor_id = ?
@@ -654,6 +797,79 @@ app.post("/api/appointments/:id/bill", (req, res) => {
   });
 });
 
+app.get("/api/appointments/:id/prescription/pdf", (req, res) => {
+  const appointmentId = req.params.id;
+  if (!isPositiveInteger(appointmentId)) {
+    return res.status(400).json({ message: "Invalid appointment ID." });
+  }
+
+  const sql = `
+    SELECT 
+      prescriptions.prescription_id,
+      prescriptions.diagnosis,
+      prescriptions.medicines,
+      prescriptions.instructions,
+      prescriptions.created_at,
+      patients.patient_name,
+      patients.age,
+      patients.gender,
+      patients.phone,
+      doctors.doctor_name,
+      doctors.specialization,
+      departments.department_name,
+      DATE_FORMAT(appointments.appointment_date, '%Y-%m-%d') AS appointment_date,
+      TIME_FORMAT(appointments.appointment_time, '%H:%i') AS appointment_time
+    FROM prescriptions
+    JOIN appointments ON appointments.appointment_id = prescriptions.appointment_id
+    JOIN patients ON patients.patient_id = appointments.patient_id
+    JOIN doctors ON doctors.doctor_id = appointments.doctor_id
+    LEFT JOIN departments ON departments.department_id = doctors.department_id
+    WHERE appointments.appointment_id = ?
+  `;
+
+  db.query(sql, [appointmentId], (error, results) => {
+    if (error) return databaseError(res, error);
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Prescription not found for this appointment." });
+    }
+    res.set({
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `inline; filename="prescription-apt-${appointmentId}.pdf"`,
+    });
+    res.send(createPrescriptionPdf(results[0]));
+  });
+});
+
+app.get("/api/appointments/:id/bill/pdf", (req, res) => {
+  const appointmentId = req.params.id;
+  if (!isPositiveInteger(appointmentId)) {
+    return res.status(400).json({ message: "Invalid appointment ID." });
+  }
+
+  const sql = `
+    SELECT bills.bill_id, bills.amount, bills.payment_status,
+      patients.patient_name, doctors.doctor_name,
+      DATE_FORMAT(appointments.appointment_date, '%Y-%m-%d') AS appointment_date,
+      TIME_FORMAT(appointments.appointment_time, '%H:%i') AS appointment_time
+    FROM bills
+    JOIN appointments ON appointments.appointment_id = bills.appointment_id
+    JOIN patients ON patients.patient_id = appointments.patient_id
+    JOIN doctors ON doctors.doctor_id = appointments.doctor_id
+    WHERE appointments.appointment_id = ?
+  `;
+  db.query(sql, [appointmentId], (error, results) => {
+    if (error) return databaseError(res, error);
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Bill not found for this appointment." });
+    }
+    res.set({
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `inline; filename="city-hospital-bill-${results[0].bill_id}.pdf"`,
+    });
+    res.send(createBillPdf(results[0]));
+  });
+});
+
 app.get("/api/bills/:id/pdf", (req, res) => {
   const billId = req.params.id;
   if (!isPositiveInteger(billId)) {
@@ -678,7 +894,7 @@ app.get("/api/bills/:id/pdf", (req, res) => {
     }
     res.set({
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename=city-hospital-bill-${billId}.pdf`,
+      "Content-Disposition": `inline; filename="city-hospital-bill-${billId}.pdf"`,
     });
     res.send(createBillPdf(results[0]));
   });

@@ -13,17 +13,128 @@
       <p>Your Clinical Dashboard</p>
 
       <nav>
-        <a href="doctor-my-profile.html">My Profile</a>
-        <a href="doctor-dashboard.html">Today's Schedule</a>
+        <a href="index.html">🏠 Hospital Home</a>
+        <a href="doctor-dashboard.html">🩺 Today's Schedule</a>
+        <a href="doctor-my-profile.html">👤 My Profile</a>
         <button class="logoutBtn">Logout</button>
       </nav>
     </aside>
 
     <main class="dashboard-main">
       <section id="doctorAppointmentsSection">
-        <h2 id="doctorWelcome">My Appointments</h2>
+        <div class="doctor-dashboard-header">
+          <div>
+            <h2 id="doctorWelcome">My Appointments</h2>
+            <p class="section-subtitle">Manage patient consultations, update appointment statuses, and issue prescriptions</p>
+          </div>
+        </div>
+
+        <!-- Appointment Status Summary Stats -->
+        <div class="doctor-stats-grid" id="doctorStatsGrid">
+          <div class="doctor-stat-card stat-confirmed active" data-filter="Confirmed" role="button" tabindex="0">
+            <span class="stat-icon">🩺</span>
+            <div class="stat-info">
+              <span class="stat-number" id="statConfirmedCount">0</span>
+              <span class="stat-label">Active Patients (Confirmed)</span>
+            </div>
+          </div>
+          <div class="doctor-stat-card stat-completed" data-filter="Completed" role="button" tabindex="0">
+            <span class="stat-icon">🏁</span>
+            <div class="stat-info">
+              <span class="stat-number" id="statCompletedCount">0</span>
+              <span class="stat-label">Checkup Done</span>
+            </div>
+          </div>
+          <div class="doctor-stat-card stat-total" data-filter="all" role="button" tabindex="0">
+            <span class="stat-icon">📅</span>
+            <div class="stat-info">
+              <span class="stat-number" id="statTotalCount">0</span>
+              <span class="stat-label">All Appointments</span>
+            </div>
+          </div>
+          <div class="doctor-stat-card stat-pending" data-filter="Pending" role="button" tabindex="0">
+            <span class="stat-icon">⏳</span>
+            <div class="stat-info">
+              <span class="stat-number" id="statPendingCount">0</span>
+              <span class="stat-label">Pending Admin Approval</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Feedback Toast -->
+        <div id="doctorStatusToast" class="doctor-toast" hidden></div>
+
         <div id="doctorAppointmentsList"></div>
       </section>
+
+      <!-- Digital Prescription Modal -->
+      <div id="prescriptionModal" class="rx-modal-backdrop" hidden>
+        <div class="rx-modal-card">
+          <div class="rx-modal-header">
+            <div>
+              <h3 id="rxModalTitle">✍️ Write Digital Prescription</h3>
+              <p id="rxModalPatientSub">Patient Clinical Consultation</p>
+            </div>
+            <button type="button" class="rx-modal-close" id="closeRxModalBtn" aria-label="Close">&times;</button>
+          </div>
+          <form id="prescriptionForm">
+            <input type="hidden" id="rxAppointmentId" value="">
+            
+            <div class="rx-form-group">
+              <label for="rxDiagnosis">Clinical Diagnosis *</label>
+              <input type="text" id="rxDiagnosis" placeholder="e.g. Acute Bronchitis, Mild Hypertension, Seasonal Flu" required>
+            </div>
+
+            <div class="rx-form-group">
+              <label for="rxMedicines">Prescribed Medicines & Dosage * (One medicine per line)</label>
+              <textarea id="rxMedicines" rows="4" placeholder="e.g.&#10;Paracetamol 650mg - 1 tab after meals (3 days)&#10;Azithromycin 500mg - 1 tab daily before dinner (5 days)&#10;Cetirizine 10mg - 1 tab at bedtime" required></textarea>
+            </div>
+
+            <div class="rx-form-group">
+              <label for="rxInstructions">Doctor's Advice & Instructions</label>
+              <textarea id="rxInstructions" rows="3" placeholder="e.g. Drink plenty of warm water, adequate rest, avoid oily food. Review in OPD after 5 days."></textarea>
+            </div>
+
+            <div class="rx-modal-actions">
+              <button type="button" class="btn-cancel" id="cancelRxModalBtn">Cancel</button>
+              <button type="submit" class="btn-save-rx" id="saveRxBtn">💾 Save Prescription</button>
+            </div>
+            <div id="rxFormMessage" class="rx-form-message"></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Quick Generate Bill Modal -->
+      <div id="billModal" class="rx-modal-backdrop" hidden>
+        <div class="rx-modal-card">
+          <div class="rx-modal-header">
+            <div>
+              <h3>🧾 Generate Medical Bill</h3>
+              <p id="billModalPatientSub">OPD Consultation & Facility Receipt</p>
+            </div>
+            <button type="button" class="rx-modal-close" id="closeBillModalBtn" aria-label="Close">&times;</button>
+          </div>
+          <form id="billForm">
+            <input type="hidden" id="billAppointmentId" value="">
+            <div class="rx-form-group">
+              <label for="billAmount">Total Consultation Amount (₹) *</label>
+              <input type="number" id="billAmount" value="500" min="0" step="50" required>
+            </div>
+            <div class="rx-form-group">
+              <label for="billPaymentStatus">Payment Status *</label>
+              <select id="billPaymentStatus" required>
+                <option value="Paid">Paid</option>
+                <option value="Unpaid">Unpaid</option>
+              </select>
+            </div>
+            <div class="rx-modal-actions">
+              <button type="button" class="btn-cancel" id="cancelBillModalBtn">Cancel</button>
+              <button type="submit" class="btn-save-rx" id="saveBillBtn">🧾 Issue Official Bill</button>
+            </div>
+            <div id="billFormMessage" class="rx-form-message"></div>
+          </form>
+        </div>
+      </div>
     </main>
   </div>
 

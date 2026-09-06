@@ -13,7 +13,7 @@
       <p>Admin Panel</p>
 
       <nav>
-        <a href="index.html">Home</a>
+        <a href="index.html">🏠 Hospital Home</a>
         <a href="#addDoctorSection">Add Doctor</a>
         <a href="#patientsSection">Patients</a>
         <a href="#appointmentsSection">Appointments</a>
@@ -55,7 +55,54 @@
       </section>
 
       <section id="appointmentsSection">
-        <h2>Appointments</h2>
+        <div class="section-title-wrap">
+          <h2>Appointments Control Centre</h2>
+          <p class="section-subtitle">Review new patient bookings, track active doctor consultations, and review completed checkups</p>
+        </div>
+
+        <!-- Admin Overview Interactive Filter Cards -->
+        <div class="admin-stats-grid">
+          <div class="admin-stat-card stat-pending active" data-tab="pending" role="button" tabindex="0">
+            <span class="stat-icon">📥</span>
+            <div>
+              <span class="stat-num" id="adminCountPending">0</span>
+              <span class="stat-name">Pending Review</span>
+            </div>
+          </div>
+          <div class="admin-stat-card stat-confirmed" data-tab="confirmed" role="button" tabindex="0">
+            <span class="stat-icon">🩺</span>
+            <div>
+              <span class="stat-num" id="adminCountConfirmed">0</span>
+              <span class="stat-name">In Doctor Queue</span>
+            </div>
+          </div>
+          <div class="admin-stat-card stat-completed" data-tab="completed" role="button" tabindex="0">
+            <span class="stat-icon">🏁</span>
+            <div>
+              <span class="stat-num" id="adminCountCompleted">0</span>
+              <span class="stat-name">Checkup Completed</span>
+            </div>
+          </div>
+          <div class="admin-stat-card stat-cancelled" data-tab="cancelled" role="button" tabindex="0">
+            <span class="stat-icon">❌</span>
+            <div>
+              <span class="stat-num" id="adminCountCancelled">0</span>
+              <span class="stat-name">Cancelled</span>
+            </div>
+          </div>
+          <div class="admin-stat-card stat-all" data-tab="all" role="button" tabindex="0">
+            <span class="stat-icon">📋</span>
+            <div>
+              <span class="stat-num" id="adminCountTotal">0</span>
+              <span class="stat-name">All Bookings</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Toast Message -->
+        <div id="adminStatusToast" class="doctor-toast" hidden></div>
+
+        <!-- Dynamic Appointments Container -->
         <div id="appointmentsList"></div>
       </section>
     </main>
