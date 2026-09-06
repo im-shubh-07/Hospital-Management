@@ -2,7 +2,8 @@ const express = require("express");
 const db = require("./config/db");
 
 const app = express();
-const PORT = 5001;
+// const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 const APPOINTMENT_STATUSES = ["Pending", "Confirmed", "Cancelled"];
 
 const isNonEmptyString = (value) =>
