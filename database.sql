@@ -105,10 +105,24 @@ CREATE TABLE IF NOT EXISTS bills (
 );
 
 -- Demo credentials and starter data
+-- 1. Admins
 INSERT INTO admins (username, password)
-SELECT 'admin', 'admin123'
+SELECT 'admin', 'Admin@123'
 WHERE NOT EXISTS (SELECT 1 FROM admins WHERE username = 'admin');
 
+INSERT INTO admins (username, password)
+SELECT 'shubham', 'Shubham@123'
+WHERE NOT EXISTS (SELECT 1 FROM admins WHERE username = 'shubham');
+
+INSERT INTO admins (username, password)
+SELECT 'naveen', 'Naveen@123'
+WHERE NOT EXISTS (SELECT 1 FROM admins WHERE username = 'naveen');
+
+INSERT INTO admins (username, password)
+SELECT 'golu', 'Golu@123'
+WHERE NOT EXISTS (SELECT 1 FROM admins WHERE username = 'golu');
+
+-- 2. Departments
 INSERT INTO departments (department_name, location)
 SELECT 'Cardiology', 'Floor 1'
 WHERE NOT EXISTS (SELECT 1 FROM departments WHERE department_name = 'Cardiology');
@@ -125,25 +139,45 @@ INSERT INTO departments (department_name, location)
 SELECT 'General Medicine', 'Floor 1'
 WHERE NOT EXISTS (SELECT 1 FROM departments WHERE department_name = 'General Medicine');
 
+-- 3. Doctors
 INSERT INTO doctors (doctor_name, specialization, phone, department_id, username, password)
-SELECT 'Dr. Amit Sharma', 'Heart Specialist', '9876543210', department_id, 'amit', 'amit123'
+SELECT 'Dr. Amit Sharma', 'Heart Specialist', '9876543210', department_id, 'amit', 'Amit@123'
 FROM departments WHERE department_name = 'Cardiology'
   AND NOT EXISTS (SELECT 1 FROM doctors WHERE username = 'amit');
 
 INSERT INTO doctors (doctor_name, specialization, phone, department_id, username, password)
-SELECT 'Dr. Neha Verma', 'Brain Specialist', '9876543211', department_id, 'neha', 'neha123'
+SELECT 'Dr. Neha Verma', 'Brain Specialist', '9876543211', department_id, 'neha', 'Neha@123'
 FROM departments WHERE department_name = 'Neurology'
   AND NOT EXISTS (SELECT 1 FROM doctors WHERE username = 'neha');
 
 INSERT INTO doctors (doctor_name, specialization, phone, department_id, username, password)
-SELECT 'Dr. Raj Mehta', 'Bone Specialist', '9876543212', department_id, 'raj', 'raj123'
+SELECT 'Dr. Raj Mehta', 'Bone Specialist', '9876543212', department_id, 'raj', 'Raj@123'
 FROM departments WHERE department_name = 'Orthopedics'
   AND NOT EXISTS (SELECT 1 FROM doctors WHERE username = 'raj');
 
 INSERT INTO doctors (doctor_name, specialization, phone, department_id, username, password)
-SELECT 'Dr. Priya Singh', 'General Physician', '9876543213', department_id, 'priya', 'priya123'
+SELECT 'Dr. Priya Singh', 'General Physician', '9876543213', department_id, 'priya', 'Priya@123'
 FROM departments WHERE department_name = 'General Medicine'
   AND NOT EXISTS (SELECT 1 FROM doctors WHERE username = 'priya');
+
+INSERT INTO doctors (doctor_name, specialization, phone, department_id, username, password)
+SELECT 'Dr. Ajay Kumar', 'Brain Specialist', '789456123', department_id, 'Ajay', 'Ajay@123'
+FROM departments WHERE department_name = 'Neurology'
+  AND NOT EXISTS (SELECT 1 FROM doctors WHERE username = 'Ajay');
+
+INSERT INTO doctors (doctor_name, specialization, phone, department_id, username, password)
+SELECT 'Dr Himanshu kumar', 'Heart Specialist', '7894561237', department_id, 'Himanshu', 'Himanshu@123'
+FROM departments WHERE department_name = 'Cardiology'
+  AND NOT EXISTS (SELECT 1 FROM doctors WHERE username = 'Himanshu');
+
+-- 4. Patients
+INSERT INTO patients (
+  patient_name, age, gender, phone, address, username, password,
+  blood_group, allergies, medical_history, emergency_contact, emergency_phone
+)
+SELECT 'Rohit Kumar', 28, 'Male', '9876543210', 'Delhi', 'rohit', 'Rohit@123',
+  'B+', 'None', 'Healthy', 'Sunil Kumar', '9876500001'
+WHERE NOT EXISTS (SELECT 1 FROM patients WHERE username = 'rohit');
 
 INSERT INTO patients (
   patient_name, age, gender, phone, address, username, password,
@@ -152,3 +186,11 @@ INSERT INTO patients (
 SELECT 'Aman Kumar', 22, 'Male', '778995', 'Delhi', 'aman', 'aman123',
   'O+', 'None', 'No known medical history', 'Ravi Kumar', '9876500000'
 WHERE NOT EXISTS (SELECT 1 FROM patients WHERE username = 'aman');
+
+INSERT INTO patients (
+  patient_name, age, gender, phone, address, username, password,
+  blood_group, allergies, medical_history, emergency_contact, emergency_phone
+)
+SELECT 'Gaurav Kumar', 25, 'Male', '9876543219', 'Delhi', 'Gaurav', 'Gaurav@123',
+  'A+', 'Dust', 'Asthma', 'Papa', '9876500002'
+WHERE NOT EXISTS (SELECT 1 FROM patients WHERE username = 'Gaurav');
